@@ -2,8 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const LinkedList = require('./LinkedList');
 
+// Função para ler o conteúdo de um arquivo.
 function readInput(filePath) {
     try {
+        // Lê o arquivo especificado e divide seu conteúdo em linhas.
         const data = fs.readFileSync(filePath, 'utf8').split('\n');
         return data;
     } catch (error) {
@@ -11,7 +13,7 @@ function readInput(filePath) {
         process.exit(1);
     }
 }
-
+// Função para salvar o conteúdo em um arquivo
 function writeOutput(filePath, content) {
     try {
         const fullPath = path.resolve(filePath);
@@ -21,7 +23,7 @@ function writeOutput(filePath, content) {
         console.error(`Erro ao escrever no arquivo ${filePath}:`, error.message);
     }
 }
-
+// Função para anexar informações de desempenho a um arquivo
 function appendPerformanceLog(filePath, content) {
     try {
         const fullPath = path.resolve(filePath);
@@ -31,10 +33,10 @@ function appendPerformanceLog(filePath, content) {
         console.error(`Erro ao registrar desempenho em ${filePath}:`, error.message);
     }
 }
-
+// Função para processar os dados do arquivo de entrada e aplicar comandos à lista.
 function process(filePath) {
     const data = readInput(filePath);
-
+ // Valida que o arquivo tenha pelo menos duas linhas
     if (data.length < 2) {
         console.error("Erro: O arquivo de entrada deve conter ao menos duas linhas.");
         process.exit(1);
@@ -42,7 +44,7 @@ function process(filePath) {
 
     const numbers = data[0].split(' ').map(Number);
     const totalCommands = parseInt(data[1], 10);
-
+// Verifica se o número total de comandos é válido
     if (isNaN(totalCommands)) {
         console.error("Erro: A segunda linha do arquivo de entrada deve conter um número válido.");
         process.exit(1);
@@ -52,7 +54,7 @@ function process(filePath) {
     const list = new LinkedList();
 
     numbers.forEach((num) => list.add(num, 999));
-
+// Itera sobre os comandos e os aplica na lista.
     commands.forEach((cmd) => {
         const parts = cmd.split(' ');
         try {
